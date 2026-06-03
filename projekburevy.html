@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>listfilmku.com - Daftar Film Terpopuler</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Gaya Dasar Meniru MAL */
+        body {
+            background-color: #e1e7f5; /* Warna background biru muda MAL */
+            font-family: Avenir, helvetica, arial, sans-serif;
+            font-size: 12px;
+            color: #323232;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1d439b; /* Warna link biru tua MAL */
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Container Utama */
+        .main-container {
+            background-color: #ffffff;
+            max-width: 1060px; /* Lebar standar MAL */
+            margin: 20px auto;
+            border: 1px solid #bebebe;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Header / Navigasi Simpel */
+        .mal-header {
+            background-color: #2e51a2; /* Warna header biru MAL */
+            padding: 10px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mal-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: white !important;
+        }
+
+        /* Area Konten Utama */
+        .content-wrapper {
+            padding: 20px;
+        }
+
+        /* Bagian Kiri (Utama) */
+        .main-content {
+            border-right: 1px solid #ebebeb;
+            padding-right: 20px;
+        }
+
+        .content-header {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #bebebe;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            color: #323232;
+        }
+
+        /* Grid Film (Kiri) */
+        .movie-card {
+            border: 1px solid #ebebeb;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+            cursor: pointer; /* Menunjukkan bisa diklik */
+        }
+
+        .movie-card:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .movie-poster-main {
+            width: 100%;
+            height: 250px; /* Tinggi seragam untuk grid */
+            object-fit: cover; /* Agar gambar tidak gepeng */
+            border-bottom: 1px solid #ebebeb;
+        }
+
+        .movie-info-main {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .movie-title-main {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Sidebar Kanan (Meniru "Anime yang Sedang Tayang Terpopuler") */
+        .sidebar {
+            padding-left: 10px;
+        }
+
+        .sidebar-header {
+            font-size: 14px;
+            font-weight: bold;
+            color: #323232;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ebebeb;
+            padding-bottom: 10px;
+        }
+
+        .rank-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #9b9b9b;
+            width: 30px;
+            text-align: center;
+            margin-right: 10px;
+            padding-top: 5px;
+        }
+
+        .sidebar-poster {
+            width: 50px;
+            height: 70px;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 1px solid #bebebe;
+        }
+
+        .sidebar-movie-info {
+            flex: 1;
+        }
+
+        .sidebar-movie-title {
+            font-weight: bold;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-movie-meta {
+            color: #808080;
+            font-size: 11px;
+        }
+
+        /* Gaya Modal Keterangan (Pop-up) */
+        .modal-header {
+            background-color: #2e51a2;
+            color: white;
+        }
+        .modal-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        .modal-body {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .modal-body h2 {
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3px;
+        }
+        .modal-body ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container shadow-sm">
+        
+        <header class="mal-header">
+            <a href="#" class="mal-brand">listfilmku.com</a>
+            <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-light text-primary fw-bold">Login</button>
+                <button class="btn btn-sm btn-outline-light fw-bold">Daftar</button>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <div class="row g-0">
+                
+                <div class="col-md-8 main-content">
+                    <h1 class="content-header">Daftar Film Terbaru & Terpopuler 2026</h1>
+                    
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        
+                        <div class="col">
+                            <div class="card movie-card h-100" onclick="showMovieDetails('avatar')">
+                                <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.56.jpeg" class="card-img-top movie-poster-main" alt="Poster Avatar: The Way of Water">
+                                <div class="movie-info-main">
+                                    <a href="#" class="movie-title-main">Avatar: The Way of Water</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card movie-card h-100" onclick="showMovieDetails('kungfupanda')">
+                                <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.56 (1).jpeg" class="card-img-top movie-poster-main" alt="Poster Kung Fu Panda 4">
+                                <div class="movie-info-main">
+                                    <a href="#" class="movie-title-main">Kung Fu Panda 4</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card movie-card h-100" onclick="showMovieDetails('wednesday')">
+                                <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.57 (1).jpeg" class="card-img-top movie-poster-main" alt="Poster Wednesday">
+                                <div class="movie-info-main">
+                                    <a href="#" class="movie-title-main">Wednesday (Series)</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card movie-card h-100" onclick="showMovieDetails('wicked')">
+                                <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.59.jpeg" class="card-img-top movie-poster-main" alt="Poster Wicked">
+                                <div class="movie-info-main">
+                                    <a href="#" class="movie-title-main">Wicked</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card movie-card h-100" onclick="showMovieDetails('kkn')">
+                                <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.57.jpeg" class="card-img-top movie-poster-main" alt="Poster KKN Di Desa Penari">
+                                <div class="movie-info-main">
+                                    <a href="#" class="movie-title-main">KKN Di Desa Penari (2022)</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card movie-card h-100" onclick="showMovieDetails('dilan')">
+                                <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.57 (2).jpeg" class="card-img-top movie-poster-main" alt="Poster Dilan 1990">
+                                <div class="movie-info-main">
+                                    <a href="#" class="movie-title-main">Dilan 1990 (2018)</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> </div> <div class="col-md-4 sidebar">
+                    <h2 class="sidebar-header">Film Terpopuler Saat Ini</h2>
+
+                    <div class="sidebar-list-item">
+                        <div class="rank-number">1</div>
+                        <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.56 (2).jpeg" class="sidebar-poster" alt="Avatar 2">
+                        <div class="sidebar-movie-info">
+                            <a href="#" class="sidebar-movie-title" onclick="showMovieDetails('avatar')">Avatar: The Way of Water</a>
+                            <div class="sidebar-movie-meta">
+                                Movie, 2022<br>
+                                Skor: 9.15 (193.950 anggota)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-list-item">
+                        <div class="rank-number">2</div>
+                        <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.56 (1).jpeg" class="sidebar-poster" alt="Kung Fu Panda 4">
+                        <div class="sidebar-movie-info">
+                            <a href="#" class="sidebar-movie-title" onclick="showMovieDetails('kungfupanda')">Kung Fu Panda 4</a>
+                            <div class="sidebar-movie-meta">
+                                Movie, 2024<br>
+                                Skor: 8.79 (190.243 anggota)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-list-item">
+                        <div class="rank-number">3</div>
+                        <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.57 (1).jpeg" class="sidebar-poster" alt="Wednesday">
+                        <div class="sidebar-movie-info">
+                            <a href="#" class="sidebar-movie-title" onclick="showMovieDetails('wednesday')">Wednesday (Series)</a>
+                            <div class="sidebar-movie-meta">
+                                TV Series, 2022<br>
+                                Skor: 8.73 (2.669.157 anggota)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-list-item">
+                        <div class="rank-number">4</div>
+                        <img src="c:\Users\asusb\Downloads\WhatsApp Image 2026-04-18 at 16.33.59.jpeg" class="sidebar-poster" alt="Wicked">
+                        <div class="sidebar-movie-info">
+                            <a href="#" class="sidebar-movie-title" onclick="showMovieDetails('wicked')">Wicked</a>
+                            <div class="sidebar-movie-meta">
+                                Movie, 2024<br>
+                                Skor: 8.70 (198.532 anggota)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-end" style="font-size: 11px;">
+                        <a href="#">Lihat Selengkapnya</a>
+                    </div>
+
+                </div> </div> </div> <footer class="p-3 text-center border-top text-muted" style="font-size: 11px; background-color: #f6f6f6;">
+            &copy; 2026 listfilmku.com. Meniru gaya MyAnimeList untuk tugas.
+        </footer>
+
+    </div> <div class="modal fade" id="movieDetailModal" tabindex="-1" aria-labelledby="movieDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="movieDetailModalLabel">Keterangan Film</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyContent">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.min.js"></script>
+
+    <script>
+        // Inisialisasi Modal Bootstrap
+        const movieModal = new bootstrap.Modal(document.getElementById('movieDetailModal'));
+        const modalTitleHtml = document.getElementById('movieDetailModalLabel');
+        const modalBodyHtml = document.getElementById('modalBodyContent');
+
+        // Data Keterangan Film (Sesuai Permintaan)
+        const movieData = {
+            'avatar': {
+                title: "Avatar: The Way of Water",
+                content: `
+                    **Avatar: The Way of Water** adalah film sekuel dari **Avatar** yang melanjutkan kisah di planet Pandora dengan fokus pada keluarga dan kehidupan laut.
+                    <br><br>
+                    ---
+                    <h2>🎬 Keterangan Film</h2>
+                    Film ini berlatar beberapa tahun setelah kejadian film pertama. Ceritanya mengikuti Jake Sully dan Neytiri yang kini memiliki anak-anak. Kehidupan mereka terganggu ketika manusia kembali datang untuk mengeksploitasi Pandora.
+                    <br><br>
+                    Untuk melindungi keluarga, Jake membawa mereka ke wilayah laut dan bergabung dengan suku Metkayina. Di sana, mereka belajar cara hidup baru yang penuh tantangan, sekaligus menghadapi konflik besar yang mengancam kelangsungan hidup mereka.
+                    <br><br>
+                    ---
+                    <h2>🎥 Sutradara</h2>
+                    Film ini disutradarai oleh James Cameron, yang juga dikenal lewat film-film besar seperti *Titanic* dan *Terminator*. Ia terkenal dengan teknologi canggih dan visual spektakuler dalam filmnya.
+                    <br><br>
+                    ---
+                    <h2>🎭 Pemeran Utama</h2>
+                    Beberapa aktor penting dalam film ini:
+                    <ul>
+                        <li>Sam Worthington sebagai Jake Sully</li>
+                        <li>Zoe Saldaña sebagai Neytiri</li>
+                        <li>Sigourney Weaver sebagai Kiri</li>
+                        <li>Stephen Lang sebagai Kolonel Quaritch</li>
+                        <li>Kate Winslet sebagai Ronal</li>
+                    </ul>
+                    <br>
+                    ---
+                    <h2>🎬 Genre</h2>
+                    Film ini memiliki beberapa genre utama:
+                    <ul>
+                        <li>**Fiksi ilmiah (Sci-Fi):** karena berlatar dunia alien (Pandora) dan teknologi masa depan</li>
+                        <li>**Aksi:** banyak adegan pertempuran dan konflik</li>
+                        <li>**Petualangan:** perjalanan dan eksplorasi dunia baru</li>
+                        <li>**Drama:** menekankan hubungan keluarga dan emosi</li>
+                    </ul>
+                    <br>
+                    ---
+                    <h2>⭐ Kesimpulan</h2>
+                    *Avatar: The Way of Water* menonjolkan cerita tentang keluarga, perjuangan, dan hubungan manusia dengan alam, dikombinasikan dengan visual bawah laut yang sangat memukau.
+                `
+            },
+            'kungfupanda': {
+                title: "Kung Fu Panda 4",
+                content: `
+                    **Kung Fu Panda 4** adalah film animasi petualangan komedi yang melanjutkan kisah Po, sang Prajurit Naga yang ikonik.
+                    <br><br>
+                    ---
+                    <h2>🎬 Keterangan Film</h2>
+                    Setelah bertahun-tahun melawan penjahat kelas dunia, Po dipanggil oleh takdir untuk... beristirahat. Lebih spesifiknya, ia diminta untuk menjadi Pemimpin Spiritual Lembah Damai. Ini berarti Po harus mencari dan melatih Prajurit Naga baru sebelum ia bisa menduduki jabatan barunya tersebut.
+                    <br><br>
+                    Tantangan baru muncul dengan hadirnya penjahat penyihir jahat dan kuat bernama The Chameleon (Bunglon), seekor kadal kecil yang bisa berubah wujud menjadi makhluk apa pun. Chameleon mengincar Tongkat Kebijaksanaan Po untuk memanggil kembali semua penjahat utama yang pernah dikalahkan Po ke alam roh.
+                    <br><br>
+                    Untuk mengalahkannya, Po harus bekerja sama dengan Zhen, seekor rubah pencuri yang cerdik. Perjalanan ini memaksa Po untuk belajar bahwa pahlawan bisa ditemukan di tempat yang paling tidak terduga.
+                    <br><br>
+                    ---
+                    <h2>🎥 Sutradara</h2>
+                    Film ini disutradarai oleh Mike Mitchell dan Stephanie Ma Stine (co-director). Mike Mitchell dikenal lewat karya-karyanya seperti *Trolls* dan *The Lego Movie 2*.
+                    <br><br>
+                    ---
+                    <h2>🎭 Pemeran Utama (Suara)</h2>
+                    Aktor pengisi suara utama (versi Inggris):
+                    <ul>
+                        <li>Jack Black sebagai Po</li>
+                        <li>Awkwafina sebagai Zhen (Rubah pendamping Po)</li>
+                        <li>Viola Davis sebagai The Chameleon (Penjahat utama)</li>
+                        <li>Dustin Hoffman sebagai Master Shifu</li>
+                        <li>Bryan Cranston sebagai Li (Ayah kandung Po)</li>
+                        <li>James Hong sebagai Mr. Ping (Ayah angkat Po)</li>
+                    </ul>
+                    <br>
+                    ---
+                    <h2>🎬 Genre</h2>
+                    <ul>
+                        <li>**Animasi:** Film kartun 3D berkualitas tinggi</li>
+                        <li>**Aksi/Bela Diri:** Penuh adegan pertarungan kung fu yang kreatif</li>
+                        <li>**Komedi:** Humor khas Po dan interaksinya dengan karakter lain</li>
+                        <li>**Petualangan:** Perjalanan Po keluar dari Lembah Damai ke kota besar</li>
+                        <li>**Keluarga:** Cocok ditonton semua umur</li>
+                    </ul>
+                    <br>
+                    ---
+                    <h2>⭐ Kesimpulan</h2>
+                    *Kung Fu Panda 4* menawarkan petualangan baru yang seru dengan tema pendewasaan, perubahan, dan penerimaan diri, sambil tetap menjaga aksi kung fu yang memukau dan humor yang menghibur.
+                `
+            },
+            'wednesday': {
+                title: "Wednesday (Series)",
+                content: `
+                    Wednesday adalah serial TV bergenre misteri dan komedi gelap yang berfokus pada karakter Wednesday Addams dari keluarga Addams.
+                    <br><br>
+                    <h2>🎬 Keterangan Series</h2>
+                    Ceritanya mengikuti Wednesday saat ia bersekolah di Nevermore Academy, sebuah sekolah khusus untuk anak-anak dengan kemampuan unik. Di sana, ia mencoba menguasai kekuatan psikisnya sekaligus menyelidiki serangkaian pembunuhan misterius yang terjadi di sekitar kota.
+                    <br><br>
+                    Dengan kepribadiannya yang dingin, cerdas, dan sedikit sinis, Wednesday menghadapi berbagai tantangan—mulai dari pertemanan, rahasia keluarga, hingga konspirasi besar yang berkaitan dengan masa lalu keluarganya.
+                    <br><br>
+                    <h2>🎥 Sutradara</h2>
+                    Serial ini disutradarai (beberapa episode) oleh Tim Burton, yang terkenal dengan gaya visual gelap dan unik seperti di film *Edward Scissorhands* dan *Charlie and the Chocolate Factory*.
+                    <br><br>
+                    <h2>🎭 Pemeran Utama</h2>
+                    Beberapa pemeran penting dalam serial ini:
+                    <ul>
+                        <li>Jenna Ortega sebagai Wednesday Addams</li>
+                        <li>Catherine Zeta-Jones sebagai Morticia Addams</li>
+                        <li>Luis Guzmán sebagai Gomez Addams</li>
+                        <li>Emma Myers sebagai Enid Sinclair</li>
+                        <li>Gwendoline Christie sebagai Kepala Sekolah Larissa Weems</li>
+                    </ul>
+                    <br>
+                    <h2>🎭 Genre</h2>
+                    <ul>
+                        <li>Misteri: menyelidiki kasus pembunuhan</li>
+                        <li>Komedi gelap: humor yang unik dan sedikit “gelap”</li>
+                        <li>Fantasi: adanya kekuatan supernatural</li>
+                        <li>Drama remaja: kehidupan sekolah dan hubungan sosial</li>
+                    </ul>
+                    <br>
+                    <h2>⭐ Kesimpulan</h2>
+                    Serial Wednesday populer karena karakter utamanya yang ikonik, cerita misteri yang menarik, dan gaya visual khas Tim Burton. Serial ini juga viral berkat adegan tarian Wednesday yang unik.
+                `
+            },
+            'wicked': {
+                title: "Wicked",
+                content: `
+                    <h2>🎬 Keterangan Wicked</h2>
+                    Wicked menceritakan kisah sebelum cerita *The Wizard of Oz*, dengan sudut pandang berbeda—fokus pada “penyihir jahat” dari Oz.
+                    <br><br>
+                    Tokoh utamanya:
+                    <ul>
+                        <li>Elphaba (yang dikenal sebagai Wicked Witch of the West)</li>
+                        <li>Glinda</li>
+                    </ul>
+                    Ceritanya mengikuti persahabatan mereka yang rumit—dari awal bertemu di sekolah sihir hingga konflik yang membuat mereka mengambil jalan hidup berbeda. Wicked menunjukkan bahwa “jahat” dan “baik” tidak selalu sesederhana yang terlihat.
+                    <br><br>
+                    <h2>🎥 Versi Film</h2>
+                    Wicked juga diadaptasi menjadi film:
+                    <ul>
+                        <li>Wicked (bagian pertama dari dua film)</li>
+                    </ul>
+                    Sutradara: Jon M. Chu
+                    <br><br>
+                    Pemeran utama:
+                    <ul>
+                        <li>Cynthia Erivo sebagai Elphaba</li>
+                        <li>Ariana Grande sebagai Glinda</li>
+                    </ul>
+                    <br>
+                    <h2>🎭 Genre</h2>
+                    <ul>
+                        <li>Fantasi</li>
+                        <li>Musikal</li>
+                        <li>Drama</li>
+                    </ul>
+                    <br>
+                    <h2>⭐ Kesimpulan</h2>
+                    Wicked adalah cerita yang mengangkat sisi lain dari kisah klasik Oz—lebih emosional, kompleks, dan penuh lagu-lagu ikonik. Bukan series, tapi musikal dan film.
+                `
+            },
+            'kkn': {
+                title: "KKN Di Desa Penari (2022)",
+                content: `
+                    <h2>Keterangan Film KKN di Desa Penari</h2>
+                    Judul: KKN di Desa Penari
+                    <br>Sutradara: Awi Suryadi
+                    <br>Produser: Manoj Punjabi
+                    <br>Penulis Cerita: SimpleMan
+                    <br>Tahun Rilis: 2022
+                    <br>Genre: Horor, Misteri
+                    <br>Rumah Produksi: MD Pictures
+                    <br>Durasi: ±130 menit
+                    <br>Negara: Indonesia
+                    <br><br>
+                    <h2>Sinopsis Singkat</h2>
+                    Film KKN di Desa Penari menceritakan tentang sekelompok mahasiswa yang menjalani program Kuliah Kerja Nyata (KKN) di sebuah desa terpencil. Mahasiswa tersebut adalah Nur, Widya, Ayu, Bima, Anton, dan Wahyu.
+                    <br><br>
+                    Sejak awal, mereka sudah diperingatkan untuk menjaga sikap dan mematuhi aturan desa. Namun, beberapa dari mereka melanggar aturan tersebut, sehingga mulai terjadi kejadian-kejadian aneh dan menakutkan. Gangguan misterius semakin sering muncul dan membuat situasi menjadi berbahaya.
+                    <br><br>
+                    Cerita ini berfokus pada akibat dari melanggar aturan dan pentingnya menghormati adat serta kepercayaan masyarakat setempat.
+                    <br><br>
+                    <h2>Tokoh-Tokoh Utama</h2>
+                    <ul>
+                        <li>Nur – Mahasiswa yang peka terhadap hal-hal gaib</li>
+                        <li>Widya – Teman Nur yang sering mengalami kejadian aneh</li>
+                        <li>Ayu – Mahasiswa yang melanggar aturan desa</li>
+                        <li>Bima – Mahasiswa yang terlibat masalah besar</li>
+                        <li>Pak Prabu – Kepala desa yang mengetahui rahasia desa</li>
+                    </ul>
+                    <br>
+                    <h2>Pesan Moral Film</h2>
+                    Beberapa pesan yang dapat diambil dari film ini:
+                    <ul>
+                        <li>Penting untuk mematuhi aturan di tempat baru.</li>
+                        <li>Harus menghormati adat dan budaya masyarakat setempat.</li>
+                        <li>Jangan bertindak sembarangan yang dapat merugikan diri sendiri dan orang lain.</li>
+                        <li>Kerja sama dan saling menjaga antar teman sangat penting.</li>
+                    </ul>
+                    <br>
+                    <h2>Fakta Menarik</h2>
+                    <ul>
+                        <li>Film ini diangkat dari cerita viral di Twitter yang ditulis oleh SimpleMan.</li>
+                        <li>Film ini menjadi salah satu film Indonesia terlaris sepanjang masa.</li>
+                        <li>Cerita film ini terinspirasi dari kisah yang diklaim berdasarkan pengalaman nyata.</li>
+                    </ul>
+                `
+            },
+            'dilan': {
+                title: "Dilan 1990 (2018)",
+                content: `
+                    <h2>Keterangan Film Dilan 1990</h2>
+                    Judul: Dilan 1990
+                    <br>Tahun Rilis: 2018
+                    <br>Genre: Drama, Romantis
+                    <br>Sutradara: Fajar Bustomi dan Pidi Baiq
+                    <br>Penulis: Pidi Baiq
+                    <br>Rumah Produksi: Max Pictures
+                    <br>Durasi: ±110 menit
+                    <br>Negara: Indonesia
+                    <br>Diangkat dari Novel: *Dilan: Dia adalah Dilanku Tahun 1990*
+                    <br><br>
+                    <h2>Sinopsis Singkat</h2>
+                    Film Dilan 1990 menceritakan kisah cinta remaja antara Dilan dan Milea di sebuah sekolah menengah di kota Bandung pada tahun 1990.
+                    <br><br>
+                    Milea adalah siswi baru pindahan dari Jakarta. Ia kemudian bertemu dengan Dilan, seorang siswa yang dikenal unik, percaya diri, dan sering membuat cara-cara romantis yang tidak biasa untuk mendekati Milea. Seiring waktu, hubungan mereka berkembang menjadi kisah cinta remaja yang manis, namun juga diwarnai konflik karena sikap Dilan yang sering terlibat masalah dengan geng motor.
+                    <br><br>
+                    <h2>Tokoh-Tokoh Utama</h2>
+                    <ul>
+                        <li>Dilan – Diperankan oleh Iqbaal Ramadhan</li>
+                        <li>Milea – Diperankan oleh Vanesha Prescilla</li>
+                        <li>Nandan – Teman dekat Dilan</li>
+                        <li>Beni – Mantan pacar Milea</li>
+                        <li>Ibu Dilan – Ibu yang dekat dengan Dilan</li>
+                    </ul>
+                    <br>
+                    <h2>Latar Film</h2>
+                    <ul>
+                        <li>Tempat: Sekolah dan lingkungan kota **Bandung</li>
+                        <li>Waktu: Tahun 1990</li>
+                        <li>Suasana: Kehidupan remaja sekolah menengah dengan nuansa romantis dan persahabatan.</li>
+                    </ul>
+                    <br>
+                    <h2>Pesan Moral Film</h2>
+                    <ul>
+                        <li>Cinta remaja sebaiknya dijalani dengan sikap yang baik dan saling menghargai.</li>
+                        <li>Persahabatan sangat penting dalam kehidupan remaja.</li>
+                        <li>Tindakan yang melanggar aturan dapat membawa dampak buruk.</li>
+                        <li>Kejujuran dan kesetiaan sangat penting dalam hubungan.</li>
+                    </ul>
+                    <br>
+                    <h2>Fakta Menarik</h2>
+                    <ul>
+                        <li>Film ini sangat populer di Indonesia dan ditonton jutaan penonton di bioskop.</li>
+                        <li>Kisahnya menjadi favorit remaja karena dialog-dialog romantis yang khas dari karakter Dilan.</li>
+                        <li>Film ini memiliki kelanjutan, yaitu *Dilan 1991* dan *Milea: Suara dari Dilan*.</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Fungsi untuk menampilkan detail film di Modal
+        function showMovieDetails(movieKey) {
+            const data = movieData[movieKey];
+            if (data) {
+                modalTitleHtml.innerText = "Keterangan Film: " + data.title;
+                modalBodyHtml.innerHTML = data.content;
+                movieModal.show(); // Tampilkan modal
+            } else {
+                alert("Data film tidak ditemukan.");
+            }
+        }
+    </script>
+</body>
+</html> 
